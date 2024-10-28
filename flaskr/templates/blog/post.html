@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+
+<!-- TODO: 请使用你的前端设计文件，调整该页面的整体布局 -->
+{% block header %}
+    <!-- TODO: 请将该部分设计为面包屑导航的形式，参考 bootstrap4 中的面包屑导航 -->
+    <!-- TODO: 请在 home 部分设置链接导航至 blog.index 的路由 -->
+    <!-- TODO: 请在 forum_name 部分设置链接导航至 blog.forum 的对应 forum_id的路由 -->
+    <h1> home >> {{ post['forum_name'] }} >> {{ post['title'] }} >></h1>
+    {% if g.user %}
+        <a class="action" href="{{url_for('blog.update')}}">Edit</a>
+        <hr>
+    {% endif %}
+{% endblock %}
+
+{% block content %}
+    <article class="post">
+        <header>
+            <div>
+                <h1>{{ post['title'] }}</h1>
+                <div class="ablout">by {{ post['username'] }} on {{ post['created'].strftime('%Y-%m-%d') }}</div>
+            </div>
+            {% if g.user['id'] == post['author_id'] %}
+                <a class="action" href="{{ url_for('blog.update', id=post['id'] )}}">Edit</a>
+            {% endif %}
+        </header>
+        <p class="body">{{ post['body'] }}</p>
+    </article>
+    <hr>
+    {% for comment in comments %}
+        {% if comment['post_id']==post['id'] %}
+            <div class='comment'>
+                {% if comment['parent_post_id'] %}
+                    <div class="about"> >> referring comment#00{{ comment['parent_post_id'] }} </div>
+                {% endif %}
+                <div class="about"> by {{ comment["username"] }} on {{ comment['created'].strftime('%Y-%m-%d') }}</div>
+                <p>{{ comment['body'] }}</p>
+                <hr>
+            </div>
+        {% endif %}
+    {% endfor %}
+    <!-- TODO: 请在这里添加一个浮动在页面底层的评论视图，视图内主要有一个comment_body输入框和一个submit按钮，
+                代码形式参考 blog/create.html 中的输入组件 -->
+{% endblock %}

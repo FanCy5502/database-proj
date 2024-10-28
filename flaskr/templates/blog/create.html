@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+<!-- TODO: 请使用你的前端设计文件，调整该页面的整体布局 -->
+{% block header %}
+    <h1>{% block title %}New Post{% endblock %}</h1>
+{% endblock %}
+
+{% block content %}
+    <form method="post">
+        <label for="forum_id">Select Forum</label>
+        <select name="forum_id" id="forum_id" required>
+            <option value="" disabled selected>Select a forum</option>
+            {% for forum in forums %}
+                <option value="{{ forum['forum_id'] }}">{{ forum['forum_name'] }}</option>
+            {% endfor %}
+        </select>
+        <br>
+        <label for="title">Title</label>
+        <input name="title" id="title" value="{{ request.form['title'] }}" required>
+        <br>
+        <label for="body">Body</label>
+        <textarea name="body" id="body">{{ request.form['body'] }}</textarea>
+        <input type="submit" value="Save">
+
+    </form>
+{% endblock %}

@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+<!-- TODO: 请使用你的前端设计文件，调整该页面的整体布局 -->
+{% block header %}
+    <h1>{% block title %}Log in{% endblock %}</h1>
+{% endblock %}
+
+{% block content %}
+    <form method = "post">
+        <label for="username">Username</label>
+        <input name="username" id="username" required>
+        <label for="password">Password</label>
+        <input type="password" name="password" id="password" required>
+        <input type="submit" value="Log in">
+    </form>
+{% endblock%}

@@ -1,0 +1,32 @@
+<!doctype html>
+<!-- TODO: 此页面为大部分网页所继承的一个父页面，包含整个网站的导航栏，用户基本信息之类的内容，
+            可以适当添加和调整布局，比如添加侧边栏、浮动窗口等等，
+            请使用你的前端设计文件，调整该页面的整体布局 -->
+<title>{%block title%}{% endblock %} - Flask</title>
+<link rel="stylesheet" href="{{url_for('static',filename='style.css')}}">
+<nav>
+    <h1>MyFirstFlaskTest</h1>
+    <ul>
+        {% if g.user %}
+            <li><span>{{ g.user['username'] }}</span>
+            <li><a href = "{{url_for('auth.logout')}}">Log Out</a>
+        {% else %}
+            <li><a href="{{url_for('auth.register')}}">Register</a>
+            <li><a href="{{url_for('auth.login')}}">Log In</a>
+        {% endif %}
+    </ul>
+</nav>
+<section>
+    <header>
+        {% block header %}{% endblock %}
+    </header>
+
+    {% for message in get_flashed_messages() %}
+        <div class = "flash">{{ message }}</div>
+    {% endfor %}
+
+    {% block content %}{% endblock %}
+    
+</section>
+
+<hr>
